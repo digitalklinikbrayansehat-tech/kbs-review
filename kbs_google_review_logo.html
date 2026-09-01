@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7A1F2B">
+<title>Feedback Klinik Brayan Sehat</title>
+<style>
+  :root{
+    --maroon:#6D2323;
+    --burgundy:#7A1F2B;
+    --cream:#FEF9E1;
+    --beige:#E5D0AC;
+    --text:#2f2522;
+    --muted:#7b6d68;
+    --white:#fffdf9;
+    --shadow:0 20px 55px rgba(75,34,25,.14);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 15% 10%, rgba(229,208,172,.55), transparent 30%),
+      linear-gradient(145deg,#fffaf0 0%,var(--cream) 48%,#f5e8d0 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:min(100%,470px);
+    background:rgba(255,253,249,.96);
+    border:1px solid rgba(109,35,35,.10);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    padding:34px 28px 28px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:before{
+    content:"";
+    position:absolute;
+    width:190px;height:190px;
+    border-radius:50%;
+    background:rgba(122,31,43,.06);
+    top:-90px;right:-70px;
+  }
+  .logo{
+    width:140px;
+    height:auto;
+    margin:0 auto 16px;
+    display:block;
+    object-fit:contain;
+  }
+  .eyebrow{
+    color:var(--burgundy);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  h1{
+    margin:0;
+    font-size:28px;
+    line-height:1.15;
+  }
+  .subtitle{
+    color:var(--muted);
+    line-height:1.55;
+    margin:12px 0 24px;
+    font-size:14px;
+  }
+  .stars{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:10px 0 12px;
+  }
+  .star{
+    border:0;
+    background:transparent;
+    padding:2px;
+    cursor:pointer;
+    font-size:43px;
+    line-height:1;
+    color:#d8cbc0;
+    transition:.18s ease;
+    filter:grayscale(.15);
+  }
+  .star:hover,.star.active{
+    color:#D29A2E;
+    transform:translateY(-3px) scale(1.04);
+  }
+  .rating-label{
+    min-height:22px;
+    color:var(--muted);
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+  }
+  .panel{
+    display:none;
+    text-align:left;
+    animation:fade .25s ease;
+  }
+  .panel.show{display:block}
+  @keyframes fade{
+    from{opacity:0;transform:translateY(5px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .message{
+    background:#fff8ec;
+    border:1px solid #eadcc7;
+    border-radius:17px;
+    padding:15px;
+    margin-bottom:14px;
+    font-size:13px;
+    line-height:1.55;
+  }
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin:12px 0 7px;
+  }
+  textarea{
+    width:100%;
+    min-height:105px;
+    resize:vertical;
+    border:1px solid #dfd2c7;
+    border-radius:15px;
+    padding:13px;
+    font:14px Arial,sans-serif;
+    outline:none;
+    background:#fff;
+  }
+  textarea:focus{border-color:var(--burgundy);box-shadow:0 0 0 3px rgba(122,31,43,.08)}
+  .btn{
+    width:100%;
+    border:0;
+    border-radius:15px;
+    padding:14px 18px;
+    margin-top:12px;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    transition:.18s ease;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--maroon);color:white}
+  .btn-google{background:#fff;border:1px solid #ddd0c5;color:#302824}
+  .btn-secondary{background:#f0e5d6;color:var(--maroon)}
+  .small{
+    font-size:11px;
+    color:#8a7c76;
+    line-height:1.5;
+    text-align:center;
+    margin-top:15px;
+  }
+  .success{
+    display:none;
+    padding:18px 5px 4px;
+  }
+  .success.show{display:block;animation:fade .25s ease}
+  .check{
+    width:55px;height:55px;border-radius:50%;
+    background:#efe3cf;color:var(--maroon);
+    display:grid;place-items:center;
+    margin:0 auto 14px;font-size:25px;font-weight:700;
+  }
+  .footer{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid #eee2d7;
+    font-size:11px;
+    color:#958780;
+  }
+  .hidden{display:none!important}
+</style>
+</head>
+
+<body>
+<main class="card">
+  <img src="LOGO KBS.png" alt="Logo Klinik Brayan Sehat" class="logo">
+  <div class="eyebrow">Klinik Brayan Sehat</div>
+  <h1>Bagaimana pengalaman Anda?</h1>
+  <p class="subtitle">
+    Penilaian Anda sangat berarti bagi kami untuk terus meningkatkan kualitas pelayanan.
+  </p>
+
+  <div class="stars" aria-label="Pilih rating">
+    <button class="star" data-rating="1" aria-label="1 bintang">★</button>
+    <button class="star" data-rating="2" aria-label="2 bintang">★</button>
+    <button class="star" data-rating="3" aria-label="3 bintang">★</button>
+    <button class="star" data-rating="4" aria-label="4 bintang">★</button>
+    <button class="star" data-rating="5" aria-label="5 bintang">★</button>
+  </div>
+
+  <div id="ratingLabel" class="rating-label">Pilih jumlah bintang</div>
+
+  <section id="feedbackPanel" class="panel">
+    <div class="message">
+      Terima kasih atas penilaian Anda. Jika ada hal yang dapat kami perbaiki,
+      kami sangat menghargai masukan Anda.
+    </div>
+
+    <label for="feedback">Masukan Anda <span style="font-weight:400">(opsional)</span></label>
+    <textarea id="feedback" placeholder="Ceritakan pengalaman Anda atau apa yang bisa kami tingkatkan..."></textarea>
+
+    <button class="btn btn-primary" id="sendFeedback">Kirim Masukan</button>
+
+    <button class="btn btn-google" id="googleBtn1">
+      ★ Bagikan Pengalaman di Google
+    </button>
+
+    <div class="small">
+      Masukan di halaman ini hanya tersimpan di perangkat Anda dan tidak otomatis
+      terkirim ke klinik tanpa sistem/backend tambahan.
+    </div>
+  </section>
+
+  <section id="googlePanel" class="panel">
+    <div class="message">
+      Terima kasih sudah meluangkan waktu untuk memberikan penilaian.
+      Jika berkenan, Anda dapat membagikan pengalaman Anda secara publik melalui Google.
+    </div>
+
+    <button class="btn btn-google" id="googleBtn2">
+      ★ Bagikan Pengalaman di Google
+    </button>
+
+    <button class="btn btn-secondary" id="backBtn">Ubah Rating</button>
+  </section>
+
+  <section id="successPanel" class="success">
+    <div class="check">✓</div>
+    <h2 style="margin:0 0 8px;font-size:22px;">Terima kasih!</h2>
+    <p style="margin:0;color:var(--muted);font-size:14px;line-height:1.5;">
+      Masukan Anda sudah dicatat pada perangkat ini.
+    </p>
+    <button class="btn btn-google" id="successGoogle">Bagikan Pengalaman di Google</button>
+  </section>
+
+  <div class="footer">Klinik Brayan Sehat • Caring Beyond Limits</div>
+</main>
+
+<script>
+/*
+=========================================================
+PENGATURAN UTAMA
+GANTI URL DI BAWAH DENGAN LINK GOOGLE REVIEW KBS.
+Contoh:
+const GOOGLE_REVIEW_URL = "https://g.page/r/CTD2f6knBLtdEBM/review";
+=========================================================
+*/
+const GOOGLE_REVIEW_URL = "https://g.page/r/CTD2f6knBLtdEBM/review";
+
+const stars = document.querySelectorAll(".star");
+const ratingLabel = document.getElementById("ratingLabel");
+const feedbackPanel = document.getElementById("feedbackPanel");
+const googlePanel = document.getElementById("googlePanel");
+const successPanel = document.getElementById("successPanel");
+const feedback = document.getElementById("feedback");
+
+let selectedRating = 0;
+
+const labels = {
+  1:"Sangat tidak puas",
+  2:"Tidak puas",
+  3:"Cukup",
+  4:"Puas",
+  5:"Sangat puas"
+};
+
+function paintStars(rating){
+  stars.forEach(star => {
+    star.classList.toggle("active", Number(star.dataset.rating) <= rating);
+  });
+}
+
+stars.forEach(star => {
+  star.addEventListener("mouseenter", () => paintStars(Number(star.dataset.rating)));
+  star.addEventListener("mouseleave", () => paintStars(selectedRating));
+
+  star.addEventListener("click", () => {
+    selectedRating = Number(star.dataset.rating);
+    paintStars(selectedRating);
+    ratingLabel.textContent = labels[selectedRating];
+
+    feedbackPanel.classList.remove("show");
+    googlePanel.classList.remove("show");
+    successPanel.classList.remove("show");
+
+    /*
+      Semua rating tetap diberi akses yang sama ke Google Review.
+      Untuk rating 1-4, form feedback ditampilkan lebih dahulu sebagai
+      kesempatan memberi masukan langsung.
+    */
+    if(selectedRating <= 4){
+      feedbackPanel.classList.add("show");
+    }else{
+      googlePanel.classList.add("show");
+    }
+  });
+});
+
+document.getElementById("sendFeedback").addEventListener("click", () => {
+  // Tanpa backend, feedback tidak benar-benar dikirim ke server.
+  // Kita simpan lokal agar user tidak kehilangan input saat halaman dibuka kembali.
+  localStorage.setItem("kbs_last_rating", selectedRating);
+  localStorage.setItem("kbs_last_feedback", feedback.value);
+
+  feedbackPanel.classList.remove("show");
+  successPanel.classList.add("show");
+});
+
+document.getElementById("backBtn").addEventListener("click", () => {
+  googlePanel.classList.remove("show");
+  ratingLabel.textContent = "Pilih jumlah bintang";
+  selectedRating = 0;
+  paintStars(0);
+});
+
+function openGoogle(){
+  if(!GOOGLE_REVIEW_URL || GOOGLE_REVIEW_URL.includes("GANTI_DENGAN")){
+    alert("Link Google Review belum diisi. Buka file HTML lalu ganti GOOGLE_REVIEW_URL dengan link review Klinik Brayan Sehat.");
+    return;
+  }
+  window.open(GOOGLE_REVIEW_URL, "_blank", "noopener,noreferrer");
+}
+
+document.getElementById("googleBtn1").addEventListener("click", openGoogle);
+document.getElementById("googleBtn2").addEventListener("click", openGoogle);
+document.getElementById("successGoogle").addEventListener("click", openGoogle);
+</script>
+</body>
+</html>
